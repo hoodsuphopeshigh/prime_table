@@ -6,11 +6,12 @@ defmodule PrimeTable.CLI do
   Input a valid integer and receive a formatted multiplication table of prime numbers
   """
 
+  alias PrimeTable.{Multiplication, Sieve}
+
   @spec main(list(binary)) :: :ok
   def main([]), do: IO.puts(help_message())
   def main([arg]) do
-    arg
-    |> String.to_integer()
+    String.to_integer(arg)
     |> IO.puts()
   rescue
     error -> exit(error_message(error, arg))

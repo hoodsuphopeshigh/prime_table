@@ -24,9 +24,9 @@ defmodule PrimeTable.Sieve do
   Uses MapSet to remove the multiples from the input.
   """
   @spec run(limit :: pos_integer()) :: list(pos_integer())
+  def run(limit \\ 100_000)
   def run(limit) when limit < 2, do: []
   def run(limit) when limit == 2, do: [2]
-
   def run(limit) do
     limit
     |> construct_list(:odds)
