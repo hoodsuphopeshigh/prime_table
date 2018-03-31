@@ -19,6 +19,20 @@ defmodule PrimeTable.CLITest do
       assert actual == expected
     end
 
+    test "displays an error message when input is zero" do
+      zero_input = "0"
+      actual = capture_io(fn -> assert :ok == CLI.main([zero_input]) end)
+      expected =
+        """
+        Invalid argument supplied.
+
+        Please ensure input is at least 1.
+
+        """
+
+      assert actual == expected
+    end
+
     test "displays the error message when an invalid argument is supplied" do
       invalid_arg = "Hello"
       actual = CLI.main([invalid_arg]) |> catch_exit

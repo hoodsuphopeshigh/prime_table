@@ -10,6 +10,7 @@ defmodule PrimeTable.CLI do
 
   @spec main(list(binary)) :: :ok
   def main([]), do: IO.puts(help_message())
+  def main(["0"]), do: IO.puts(invalid_arg())
   def main([arg]) do
     amount = String.to_integer(arg)
 
@@ -28,6 +29,14 @@ defmodule PrimeTable.CLI do
     ./primetable <Integer>
 
     Will return a formatted multiplication table of prime numbers.
+    """
+  end
+
+  defp invalid_arg do
+    """
+    Invalid argument supplied.
+
+    Please ensure input is at least 1.
     """
   end
 
