@@ -35,7 +35,7 @@ defmodule PrimeTable.CLITest do
     test "returns the value passed in when valid argument is supplied" do
       valid_arg = "2"
       actual = capture_io(fn -> assert :ok == CLI.main([valid_arg]) end)
-      expected = "2\n"
+      expected = "| | 2| 3|\n| 2| 4| 6|\n| 3| 6| 9|\n\n"
 
       assert actual == expected
     end
