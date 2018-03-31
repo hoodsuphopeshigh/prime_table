@@ -99,7 +99,7 @@ I would implement other approaches for removing a list of elements from another 
 There are more performant approaches for smaller values these would include adding the following:
 
 * `a -- b` for prime numbers < 100
-* `` for prime numbers < 1000
+* `Enum.member?` for prime numbers < 1000
 
 Before using the MapSet approach for prime numbers >= 1000.
 
