@@ -14,20 +14,18 @@ defmodule PrimeTable.Table do
   end
 
   defp iterate_over_input(input) do
-    Enum.map(input, &(iterate_over_elements/1))
+    padding = calculate_padding(input)
+    Enum.map(input, &(iterate_over_elements(&1, padding)))
   end
 
-  defp iterate_over_elements(input) do
-    Enum.map(input, &(format_cell/1))
+  defp iterate_over_elements(input, padding) do
+    Enum.map(input, &(format_cell(&1, padding)))
   end
 
-  defp join_elements(input) do
-    Enum.join(input, @separator)
-  end
-
-  defp format_cell(value) do
+  defp format_cell(value, padding) do
     value
     |> convert_to_string()
+    |> String.pad_leading(padding)
     |> add_separator(:front)
   end
 
@@ -36,8 +34,20 @@ defmodule PrimeTable.Table do
     Integer.to_string(value)
   end
 
+  defp join_elements(input) do
+    Enum.join(input, @separator)
+  end
+
   defp add_separator(value, :front) do
-    "| #{value}"
+    "|#{value}"
   end
   defp add_separator(value, :last), do: value <> @separator
+
+  defp calculate_padding(input) do
+    input
+    |> List.last()
+    |> List.last()
+    |> to_string()
+    |> String.length()
+  end
 end
