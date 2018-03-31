@@ -1,6 +1,9 @@
 defmodule PrimeTable.Table do
   @moduledoc """
   Responsible for creating the formatted table returned to the user
+
+  Each element is padded with the length of the largest number to ensure
+  even spacing.
   """
 
   @separator "|\n"

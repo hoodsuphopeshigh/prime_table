@@ -1,6 +1,8 @@
 defmodule PrimeTable.Multiplication do
   @moduledoc """
   Handles the creation of the prime multiplication table
+
+  Accepts a list of primes and returns a matrix.
   """
 
   @spec create_matrix(input :: list(pos_integer())) :: list(list)
@@ -11,18 +13,17 @@ defmodule PrimeTable.Multiplication do
   end
 
   defp construct_matrix(input) do
-    matrix =
-      input
-      |> Stream.map(fn row_value ->
-        [ row_value | perform_calculations(input, row_value) ]
-      end)
+    matrix = Stream.map(input, &compose_row(&1, input))
 
     {input, matrix}
   end
 
+  defp compose_row(row_value, input) do
+    [ row_value | perform_calculations(input, row_value) ]
+  end
+
   defp perform_calculations(input, row_value) do
-    input
-    |> Enum.map(fn col_value -> row_value * col_value end)
+    Enum.map(input, fn col_value -> row_value * col_value end)
   end
 
   defp compose_result({input, matrix}) do
