@@ -15,18 +15,27 @@ defmodule PrimeTable.Sieve do
 
   When the algorithm terminates, the numbers remaining not marked in the list are all the primes below n.
 
+  Optimisations:
+
+  The list of values to check for primes contains only odd numbers when p > 2.
+
+  The list of values to use as a sieve is the square root of the limit / 2.
+
+  Uses MapSet to remove the multiples from the input.
   """
   @spec run(limit :: pos_integer()) :: list(pos_integer())
-  def run(limit) when limit < 2,  do: []
+  def run(limit) when limit < 2, do: []
   def run(limit) when limit == 2, do: [2]
+
   def run(limit) do
     limit
     |> construct_list(:odds)
     |> sieve(limit)
+    |> handle_result()
   end
 
   defp construct_list(limit, type) do
-    [2 | construct_list_type(limit, type) ]
+    [2 | construct_list_type(limit, type)]
   end
 
   defp construct_list_type(limit, :odds) do
@@ -41,22 +50,31 @@ defmodule PrimeTable.Sieve do
 
   defp sieve(input, limit) do
     list = construct_list(limit, :every)
-    Enum.reduce(input, list, fn x, acc ->
-      if Enum.at(acc, x) do
-        multiples = multiples_to_remove(x, limit)
-        remove_multiples(acc, multiples)
+
+    Enum.reduce(input, list, fn index, acc ->
+      if Enum.at(acc, index) do
+        remove_multiples(index, acc, limit)
       else
         acc
       end
     end)
   end
 
-  defp multiples_to_remove(input, limit) do
+  defp remove_multiples(index, acc, limit) do
+    index
+    |> construct_multiples(limit)
+    |> remove(acc)
+  end
+
+  defp construct_multiples(input, limit) do
     Stream.iterate(input * input, &(&1 + input))
     |> Enum.take_while(fn x -> x <= limit end)
   end
 
-  defp remove_multiples(input, multiples) do
-    input -- multiples
+  defp remove(multiples, input) do
+    MapSet.difference(MapSet.new(input), MapSet.new(multiples))
   end
+
+  defp handle_result(input) when is_map(input), do: Enum.sort(input)
+  defp handle_result(input), do: input
 end
