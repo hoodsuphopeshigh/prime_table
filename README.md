@@ -112,3 +112,8 @@ I was torn between two approaches, either:
 * Take the last value of the first row of the matrix, multiply this, and use the results length.
 
 I opted for option one, it's crude and involves two passes over a list, but the second pass is magnitudes smaller than the first.
+
+I would also add in an aggressive caching strategy for calculating the multiplication matrix. 
+There are duplicate values throughout so having a cache built on a GenServer would reduce the amount of calculations.
+
+This is currently the biggest bottleneck in the application for larger values.
