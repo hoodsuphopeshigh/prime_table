@@ -6,6 +6,8 @@ defmodule PrimeTable.Table do
   even spacing.
   """
 
+  alias PrimeTable.Helpers
+
   @separator "|\n"
 
   @spec build(input :: list(list)) :: String.t()
@@ -18,11 +20,11 @@ defmodule PrimeTable.Table do
 
   defp iterate_over_input(input) do
     padding = calculate_padding(input)
-    Enum.map(input, &(iterate_over_elements(&1, padding)))
+    Helpers.pmap(input, &(iterate_over_elements(&1, padding)))
   end
 
   defp iterate_over_elements(input, padding) do
-    Enum.map(input, &(format_cell(&1, padding)))
+    Helpers.pmap(input, &(format_cell(&1, padding)))
   end
 
   defp format_cell(value, padding) do

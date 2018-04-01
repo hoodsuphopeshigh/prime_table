@@ -5,6 +5,8 @@ defmodule PrimeTable.Multiplication do
   Accepts a list of primes and returns a matrix.
   """
 
+  alias PrimeTable.Helpers
+
   @spec create_matrix(input :: list(pos_integer())) :: list(list)
   def create_matrix(input) do
     input
@@ -23,7 +25,7 @@ defmodule PrimeTable.Multiplication do
   end
 
   defp perform_calculations(input, row_value) do
-    Enum.map(input, fn col_value -> row_value * col_value end)
+    Helpers.pmap(input, fn col_value -> row_value * col_value end)
   end
 
   defp compose_result({input, matrix}) do
