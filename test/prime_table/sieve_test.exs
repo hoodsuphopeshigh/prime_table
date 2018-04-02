@@ -97,5 +97,19 @@ defmodule PrimeTable.SieveTest do
 
       assert actual == expected
     end
+
+    test "returns the 10_000th prime number" do
+      actual = Sieve.run |> Enum.take(10_000) |> List.last()
+      expected = 104_729
+
+      assert actual == expected
+    end
+
+    test "returns the 20_000th prime number" do
+      actual = Sieve.run |> Enum.take(20_000) |> List.last()
+      expected = 224_737
+
+      assert actual == expected
+    end
   end
 end
